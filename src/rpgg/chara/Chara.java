@@ -1,5 +1,8 @@
 package rpgg.chara;
 
+import java.math.BigDecimal;
+
+import common.NumberUtil;
 import rpgg.util.Out;
 
 public class Chara {
@@ -89,16 +92,23 @@ public class Chara {
 		return !isDie();
 	}
 
+	public BigDecimal getRndSpeedVal(int v) {
+		BigDecimal sh = new BigDecimal(0.2);
+		BigDecimal rnd = new BigDecimal(v).multiply(sh);
+		rnd = NumberUtil.getRndNoBigDecimal(rnd).add(rnd);
+		return new BigDecimal(getSpeed()).add(rnd);
+	}
+
+	public BigDecimal getRndAttackVal(int v) {
+		BigDecimal sh = new BigDecimal(0.4);
+		BigDecimal rnd = new BigDecimal(v).multiply(sh);
+		rnd = NumberUtil.getRndNoBigDecimal(rnd).add(rnd);
+		return new BigDecimal(getAttack()).add(rnd);
+	}
+
 	/**
 	 * ステータス表示
 	 * 	private String name;
-	private int hp;
-	private int mp;
-	private int lv;
-	private int speed;
-	private int attack;
-	private int exp;
-	private int gold;
 	 */
 	public void showStatus() {
 		Out.ln("＊＊＊＊＊　ステータスHP　＊＊＊＊＊");

@@ -1,7 +1,9 @@
 package rpgg.chara;
 
+import java.math.BigDecimal;
+
+import common.NumberUtil;
 import rpgg.util.Out;
-import rpgg.util.Scan;
 
 public class Yusha extends Chara {
 
@@ -21,7 +23,7 @@ public class Yusha extends Chara {
 		setMp(0);
 		setLv(1);
 		setName("勇者");
-		setSpeed(6);
+		setSpeed(4);
 		setAttack(10);
 	}
 
@@ -54,7 +56,11 @@ public class Yusha extends Chara {
 	 * @return
 	 */
 	public boolean isSpeedGreaterThanMonster() {
-		return getSpeed() >= monster.getSpeed();
+		BigDecimal ys = getRndSpeedVal(getSpeed());
+		BigDecimal ms = getRndSpeedVal(monster.getSpeed());
+		Out.ln("勇者：" + ys.toPlainString());
+		Out.ln("モンスター：" + ms.toPlainString());
+		return NumberUtil.isGreater(ys, ms);
 	}
 
 	/**
@@ -82,15 +88,17 @@ public class Yusha extends Chara {
 	}
 
 	public void selectNextAction() {
-		while (true) {
-			Out.ln("次のアクションを選択してください");
-			Out.ln("0 : フィールドに出る");
-			Out.ln("9 : 終了");
-			String next = Scan.scan();
-			if ("0".equals(next) || "9".equals(next)) {
-				setNextAction(next);
-				break;
-			}
-		}
+		//		while (true) {
+		//			Out.ln("次のアクションを選択してください");
+		//			Out.ln("0 : フィールドに出る");
+		//			Out.ln("9 : 終了");
+		//			String next = Scan.scan();
+		//			if ("0".equals(next) || "9".equals(next)) {
+		//				setNextAction(next);
+		//				break;
+		//			}
+		//		}
+		setNextAction("0");
 	}
+
 }

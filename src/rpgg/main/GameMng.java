@@ -3,6 +3,7 @@ package rpgg.main;
 import rpgg.battle.Battle;
 import rpgg.chara.Monster;
 import rpgg.chara.Yusha;
+import rpgg.exception.YushaDieException;
 import rpgg.field.Field;
 import rpgg.town.Town;
 
@@ -14,7 +15,8 @@ public class GameMng {
 	Battle battle = new Battle();
 	Monster monster = new Monster();
 
-	public void execute() {
+	public void execute() throws YushaDieException {
+		yusha.init();
 		while (true) {
 			init();
 			yusha.selectNextAction();
@@ -33,7 +35,6 @@ public class GameMng {
 
 	private void init() {
 		monster.init();
-		yusha.init();
 		yusha.setMonster(monster);
 		battle.init(yusha);
 		field.start();

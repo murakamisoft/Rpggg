@@ -2,6 +2,7 @@ package rpgg.battle;
 
 import rpgg.chara.Monster;
 import rpgg.chara.Yusha;
+import rpgg.exception.YushaDieException;
 import rpgg.util.Out;
 
 public class Battle {
@@ -12,43 +13,36 @@ public class Battle {
 		this.yusha = yusha;
 	}
 
-	public void start(Monster monster) {
+	public void start(Monster monster) throws YushaDieException {
 		this.monster = monster;
 		Out.ln(monster.getName() + "が現れた！");
 		while (true) {
 			attack();
-			if (isBreakBattleLoop()) {
+			if (monster.isDie()) {
 				break;
 			}
 		}
 	}
 
-	private boolean isBreakBattleLoop() {
-		return monster.isDie() || yusha.isDie();
-	}
-
-	private void attack() {
+	private void attack() throws YushaDieException {
 		if (yusha.isSpeedGreaterThanMonster()) {
 			attackYusha();
 			if (monster.isNotDie()) {
 				attackMonster();
 			}
-			return;
-		}
-		if (yusha.isNotSpeedGreaterThanMonster()) {
+		} else {
 			attackMonster();
 			if (yusha.isNotDie()) {
 				attackYusha();
 			}
-			return;
 		}
 	}
 
 	private void attackYusha() {
 		int damage = 0;
 		Out.ln(yusha.getName() + "の攻撃！");
-		damage = yusha.getAttack();
-		Out.ln(yusha.getName() + "は" + monster.getName() + "に" + yusha.getAttack() + "ポイントのダメージを与えた！");
+		damage = yusha.getRndAttackVal(yusha.getAttack()).intValue();
+		Out.ln(yusha.getName() + "は" + monster.getName() + "に" + damage + "ポイントのダメージを与えた！");
 		monster.damage(damage);
 		if (monster.isDie()) {
 			Out.ln(monster.getName() + "をやっつけた！");
@@ -58,16 +52,17 @@ public class Battle {
 		}
 	}
 
-	private void attackMonster() {
+	private void attackMonster() throws YushaDieException {
 
 		int damage = 0;
 		Out.ln(monster.getName() + "の攻撃！");
-		damage = monster.getAttack();
-		Out.ln(monster.getName() + "は" + yusha.getName() + "に" + monster.getAttack() + "ポイントのダメージを与えた！");
+		damage = monster.getRndAttackVal(monster.getAttack()).intValue();
+		Out.ln(monster.getName() + "は" + yusha.getName() + "に" + damage + "ポイントのダメージを与えた！");
 		yusha.damage(damage);
 		if (yusha.isDie()) {
 			Out.ln(yusha.getName() + "は死んでしまった…");
 			yusha.loseBattle();
+			throw new YushaDieException();
 		}
 	}
 
