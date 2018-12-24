@@ -22,6 +22,9 @@ public class Battle {
 				break;
 			}
 		}
+		if (yusha.isLvUp()) {
+			yusha.lvUp();
+		}
 	}
 
 	private void attack() throws YushaDieException {

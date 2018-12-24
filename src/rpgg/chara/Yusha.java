@@ -3,7 +3,7 @@ package rpgg.chara;
 import java.math.BigDecimal;
 
 import common.NumberUtil;
-import rpgg.util.Out;
+import rpgg.status.StatusMng;
 
 public class Yusha extends Chara {
 
@@ -15,10 +15,13 @@ public class Yusha extends Chara {
 
 	private String nextAction;
 
+	private StatusMng statusMng;
+
 	/**
 	 * 初期化
 	 */
 	public void init() {
+		statusMng = new StatusMng();
 		setHp(20);
 		setMp(0);
 		setLv(1);
@@ -58,8 +61,6 @@ public class Yusha extends Chara {
 	public boolean isSpeedGreaterThanMonster() {
 		BigDecimal ys = getRndSpeedVal(getSpeed());
 		BigDecimal ms = getRndSpeedVal(monster.getSpeed());
-		Out.ln("勇者：" + ys.toPlainString());
-		Out.ln("モンスター：" + ms.toPlainString());
 		return NumberUtil.isGreater(ys, ms);
 	}
 
@@ -99,6 +100,18 @@ public class Yusha extends Chara {
 		//			}
 		//		}
 		setNextAction("0");
+	}
+
+	public boolean isLvUp() {
+		if (getExp() >= statusMng.getExp(getLv())) {
+			return true;
+		}
+		return false;
+	}
+
+	public void lvUp() {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 
 }
