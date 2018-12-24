@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import common.NumberUtil;
 import rpgg.status.StatusMng;
+import rpgg.util.Out;
 
 public class Yusha extends Chara {
 
@@ -110,8 +111,8 @@ public class Yusha extends Chara {
 	}
 
 	public void lvUp() {
-		// TODO 自動生成されたメソッド・スタブ
-
+		Out.ln(getName() + "はレベルが上がった！");
+		//TODO
 	}
 
 }
