@@ -104,10 +104,7 @@ public class Yusha extends Chara {
 	}
 
 	public boolean isLvUp() {
-		if (getExp() >= statusMng.getExp(getLv())) {
-			return true;
-		}
-		return false;
+		return getExp() >= statusMng.getExp(getLv());
 	}
 
 	public void lvUp() {
